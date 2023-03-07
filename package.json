@@ -1,0 +1,24 @@
+{
+  "name": "signals-server",
+  "version": "1.0.0",
+  "description": "Server side platform for e-health biosignals data managment",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlejandroForeroG/Server-Signal-Platfom-Ehealth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlejandroForeroG/Server-Signal-Platfom-Ehealth/issues"
+  },
+  "homepage": "https://github.com/AlejandroForeroG/Server-Signal-Platfom-Ehealth#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1"
+  }
+}
