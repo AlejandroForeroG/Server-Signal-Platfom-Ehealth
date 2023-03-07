@@ -1,24 +1,23 @@
 const express = require('express'); 
 const http = require('http');
-import {Server as WebSocketServer} from "socket.io"
+const WebSocketServer =  require("socket.io")
 
 
 const app = express();
-const httpServer =  http.createServer(app);    
-const  io = WebSocketServer(httpServer);
+const Server =  http.createServer(app);    
+const  io = WebSocketServer(Server);
 
 //static files indication with dir path, and frontend directory 
 app.use(express.static(__dirname + '/public'));
 
 
 
-//start sever and listen in the port
+//start  httpsever and listen in the port
 app.set('port', process.env.PORT || 3000);// PORT Asignment
-
-app.listen(app.get('port'),()=>{
+Server.listen(app.get('port'),()=>{
     console.log(`Server is listening on port ${app.get('port')}...` )
 })
-
+//event in io server 
 io.on('connection',()=>{
     console.log('New socket conection');
 });
