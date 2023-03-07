@@ -1,11 +1,14 @@
 const path= require ('path')
 const express = require('express'); 
+const http = require('http');
 app = express();
-PORT= 3000;
+http.createServer(app);
 
-app.set('port',process.env.PORT||PORT);// PORT Asignment
+app.set('port',process.env.PORT||3000);// PORT Asignment
 //static files indication with dir path, and frontend directory 
 app.use(express.static(path.join(__dirname + '/public')));
+
+
 
 //start sever and listen in the port
 const server = app.listen(app.get('port'),()=>{
