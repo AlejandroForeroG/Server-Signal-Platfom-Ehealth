@@ -17,14 +17,12 @@ app.set('port', process.env.PORT || 3000);// PORT Asignment
 Server.listen(app.get('port'),()=>{
     console.log(`El servidor esta escuchando en el puerto ${app.get('port')}...` )
 })
-//event in io server 
+
+//events of the socket
 io.on('connection',(socket)=>{
     console.log('\nNueva coneccion del socket: ', socket.handshake.address);
 
-    socket.on('disconnect',()=>{
-        console.log("\nComunicacion finalizada en: ", socket.handshake.address)
-    })
-
+    
     //socket recieber for the rasberry data send 
     socket.on('rasberry:data', (data) => {
         console.log("Temperatura")
@@ -35,4 +33,12 @@ io.on('connection',(socket)=>{
         console.log(err.message)
     })
 
+    
+    socket.on('disconnect', () => {
+        console.log("\nComunicacion finalizada en: ", socket.handshake.address)
+    })
+
+
 });
+
+
