@@ -15,9 +15,24 @@ app.use(express.static(__dirname + '/public'));
 //start  httpsever and listen in the port
 app.set('port', process.env.PORT || 3000);// PORT Asignment
 Server.listen(app.get('port'),()=>{
-    console.log(`Server is listening on port ${app.get('port')}...` )
+    console.log(`El servidor esta escuchando en el puerto ${app.get('port')}...` )
 })
 //event in io server 
-io.on('connection',()=>{
-    console.log('New socket conection');
+io.on('connection',(socket)=>{
+    console.log('\nNueva coneccion del socket: ', socket.handshake.address);
+
+    socket.on('disconnect',()=>{
+        console.log("\nComunicacion finalizada en: ", socket.handshake.address)
+    })
+
+    //socket recieber for the rasberry data send 
+    socket.on('rasberry:data', (data) => {
+        console.log("Temperatura")
+        console.log(data);
+    });
+
+    socket.on('error', (err) => {
+        console.log(err.message)
+    })
+
 });
