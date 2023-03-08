@@ -29,6 +29,7 @@ io.on('connection',(socket)=>{
     socket.on('rasberry:data', (data) => {
         console.log("Temperatura")
         console.log(data);
+        io.emit('rasberry:data',(data ));
     });
 
     socket.on('error', (err) => {
