@@ -17,6 +17,8 @@ app.set('port', process.env.PORT || 3000);// PORT Asignment
 Server.listen(app.get('port'),()=>{
     console.log(`El servidor esta escuchando en el puerto ${app.get('port')}...` )
 })
+
+
 //event in io server 
 io.on('connection',(socket)=>{
     console.log('\nNueva coneccion del socket: ', socket.handshake.address);
@@ -25,11 +27,23 @@ io.on('connection',(socket)=>{
         console.log("\nComunicacion finalizada en: ", socket.handshake.address)
     })
 
+    var comprobante=0;
     //socket recieber for the rasberry data send 
     socket.on('rasberry:data', (data) => {
-        console.log("Temperatura")
-        console.log(data);
-        io.emit('rasberry:data',(data ));
+        //buffer comprobation
+        if(comprobante!=1){
+            if(data.sampleGen!=1){
+                console.log("Esperando buffer...")
+            }else{
+                comprobante=1;
+                console.log(data);
+                io.emit('rasberry:data',(data));
+            }
+        }else{
+            console.log(data);
+            io.emit('rasberry:data',(data));
+        }
+        
     });
 
     socket.on('error', (err) => {

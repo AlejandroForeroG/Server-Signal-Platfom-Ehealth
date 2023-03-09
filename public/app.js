@@ -1,8 +1,10 @@
 const socket = io();
 let counter=0;
 
-
+//when the rasberry send the data 
 socket.on('rasberry:data', (dataSerial) => {
+
+    
     Chart.data.labels.push(counter);
     Chart.data.datasets.forEach(dataset => {
         dataset.data.push(dataSerial.value)
