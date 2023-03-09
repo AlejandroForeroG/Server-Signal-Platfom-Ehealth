@@ -68,36 +68,6 @@ Charte = new Chart(ctx, {
 });
 
 
-const ctxo = document.getElementById('myChartBMP');
-Charco = new Chart(ctxo, {
-    type: 'line',
-    data: {
-        labels: ['BMP'],
-        datasets: [{
-            label: 'BMP',
-            backgrounColor:'rgb(238, 54, 54)',
-            borderColor:'rgb(238, 54, 54)',
-            data: [],
-        }]
-    },
-    options:{}
-});
-
-const ctxb = document.getElementById('myChartox');
-Lalo = new Chart(ctxb, {
-    type: 'line',
-    data: {
-        labels: ['Saturacion de oxigeno'],
-        datasets: [{
-            label: 'Saturacion de oxigeno',
-            backgrounColor:'rgb(54, 82, 238)',
-            borderColor:'rgb(54, 82, 238)',
-            data: [],
-        }]
-    },
-    options:{}
-});
-
 
 
 

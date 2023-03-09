@@ -1,5 +1,8 @@
+const { rejects } = require('assert');
+const { Resolver } = require('dns');
 const express = require('express'); 
 const http = require('http');
+const { resolve } = require('path');
 const WebSocketServer =  require("socket.io")
 
 
@@ -25,28 +28,35 @@ Server.listen(app.get('port'),()=>{
 io.on('connection',(socket)=>{
     
     console.log('\nNueva coneccion del socket: ', socket.handshake.address);
-
+    
     var comprobante=0;
     //socket recieber for the rasberry data send 
     socket.on('rasberry:data', (data) => {
-        
-        //buffer comprobation hacer promresa  🟩
-        // if(comprobante!=1){
-        //     if(data.sampleGen!=1){
-        //         console.log("Esperando buffer...")
-        //     }else{
-        //         comprobante=1;
-        //         console.log(data);
-                
-        //         io.emit('rasberry:data',(data));
-        //     }
-        // }else{
-        //     console.log(data);
-        //     io.emit('rasberry:data',(data));
-        // } 
+    // buffer liberator  
+       const bufferProbe = new Promise((resolve,reject)=>{
+            if(comprobante!=1){
+                if(data.sample!=1){
+                    reject("esperando buffer")
+                }else{
+                    resolve()
+                }
+            }else{
+                resolve()
+            }
+       })
        
-        data.temperature=(comp(data.temperature,37,35));
-        io.emit('rasberry:data', data);
+       bufferProbe
+            .then(()=>{
+                comprobante=1
+                data.temperature=(comp(data.temperature,37,35));
+                io.emit('rasberry:data', data);
+                console.log(data.sample)
+
+            })
+            .catch((rechazo)=>{
+                console.log(rechazo)
+            })
+
     });
 
 
