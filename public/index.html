@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="main.css">
     <title>Bio-Ops</title>
     
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>   
-   <h1>Hola desde el server !!! 🎏</h1> 
-   <canvas id="myChart"></canvas>
-   <script src="/socket.io/socket.io.js"></script>
-    <script src="app.js"></script>
-    
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+    <h1 class="Texto">Sitema de adquisicion de señales V0.1 </h1>
+    <h2 class="Texto">Hola !!!👋</h2> 
+    <h3 class="Texto" >Estas son las señales adquiridas:</h3>
+    <div class= signals>
+        <div class = "graph"> <canvas id="myChartTemp"></canvas> </div>
+        <div class="graph"> <canvas id="myChartBMP"></canvas></div>
+        <div class="graph"> <canvas id="myChartox"></canvas></div>
+        <!-- <div class="graph"> <canvas id="myChartgsrRes"></canvas></div>
+        <div class="graph"> <canvas id="myChartBMP"></canvas></div>
+        <div class="graph"> <canvas id="myChartBMP"></canvas></div>
+        <div class="graph"> <canvas id="myChartBMP"></canvas></div>
+        <div class="graph"> <canvas id="myChartBMP"></canvas></div> -->
+
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="app.js"></script>
+    </div>
 
     
 

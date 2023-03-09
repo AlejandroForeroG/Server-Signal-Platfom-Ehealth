@@ -1,0 +1,27 @@
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.Texto{
+    text-align: center;
+}
+h3{
+    font-weight: lighter;
+}
+
+.graph{
+    width: 30%;
+    height: 30%;
+    border: solid;
+    margin: 10px 20px 10px 0;
+    border-radius: 10px;
+    border-width: 2px;
+    padding: 5px;
+    display: inline-block;
+    
+}
