@@ -41,9 +41,6 @@ socket.on('rasberry:data', (dataSerial) => {
 
 
 const ctx = document.getElementById('myChartTemp').getContext('2d');
-let gradient = ctx.createLinearGradient(0,0,0,400);
-gradient.addColorStop(0,'rgba(58,123,213,1)')
-gradient.addColorStop(1,'rgba(0,210,255,0.3')
 
 Charte = new Chart(ctx, {
     type: 'line',
@@ -52,13 +49,16 @@ Charte = new Chart(ctx, {
         datasets: [{
             label: 'Temperatura',
             fill:true,
-            pointBackgrounColor:"rgb(189,195,199)",
-            borderColor:'rgb(189,195,199)',
-            backgrounColor:gradient,
+            borderColor:'rgb(255,88,88)',
+            backgroundColor:'rgb(255,88,88,0.5)',
+            tension:0.4,
             data: [],
         }],
     },
     options:{
+        radius:5,
+        hitRadius:30,
+        hoverRadius:12,
        animation: {
             duration:"1000",
     

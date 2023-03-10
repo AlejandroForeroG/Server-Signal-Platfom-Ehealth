@@ -1,8 +1,11 @@
-const { rejects } = require('assert');
-const { Resolver } = require('dns');
+/*this code describes the backend of the application, 
+here are executed the tasks of the acquisition of the 
+processed data and the transmission of these to the front end.
+Made by: Juan Alejandro Forero Gomez*/ 
+
+//libraries and modules 
 const express = require('express'); 
 const http = require('http');
-const { resolve } = require('path');
 const WebSocketServer =  require("socket.io")
 
 
@@ -30,6 +33,7 @@ io.on('connection',(socket)=>{
     console.log('\nNueva coneccion del socket: ', socket.handshake.address);
     
     var comprobante=0;
+
     //socket recieber for the rasberry data send 
     socket.on('rasberry:data', (data) => {
     // buffer liberator  
@@ -44,21 +48,21 @@ io.on('connection',(socket)=>{
                 resolve()
             }
        })
-       
+
        bufferProbe
             .then(()=>{
                 comprobante=1
-                data.temperature=(comp(data.temperature,37,35));
+                data.temperature=(comp(data.temperature,37,35,33));
                 io.emit('rasberry:data', data);
                 console.log(data.sample)
 
             })
             .catch((rechazo)=>{
+                console.log(data.sample)
                 console.log(rechazo)
             })
 
     });
-
 
     socket.on('error', (err) => {
         console.log(err.message)
@@ -70,10 +74,12 @@ io.on('connection',(socket)=>{
 
 });
 
-function comp(comp,max,min){
+
+//comparator 
+function comp(comp,max,min,prom){
     comp=comp;
     if(comp>=max ||comp<=min ){
         return comp
     }else
-        return 0;
+        return prom;
 }
