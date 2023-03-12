@@ -75,6 +75,7 @@ io.on('connection',(socket)=>{
 });
 
 
+
 //comparator 
 function comp(comp,max,min,prom){
     comp=comp;
