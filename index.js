@@ -71,6 +71,7 @@ io.on('connection',(socket)=>{
       socket.on('disconnect',()=>{
         console.log("\nComunicacion finalizada en: ", socket.handshake.address)
     })
+   
 
 });
 
@@ -84,3 +85,5 @@ function comp(comp,max,min,prom){
     }else
         return prom;
 }
+
+
