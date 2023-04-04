@@ -11,25 +11,25 @@
 <body>
 
 
-    <h1 class="Texto">Sitema de adquisicion de señales V0.1 </h1>
+    <h1 class="Texto">Sistema de adquisicion de señales V0.1 </h1>
     <h2 class="Texto">Hola !!!👋</h2> 
     <h3 class="Texto" >Estas son las señales adquiridas:</h3>
+
+    <button id="startButton">Iniciar conexion</button>
+
     <div class= "signals" >
         <div class ="graph"><canvas id="myChartTemp"></canvas> </div>
         <div class="graph"> <canvas id="myChartBMP"></canvas></div>
         <div class="graph"> <canvas id="myChartox"></canvas></div>
     </div>
-
+    <!-- Scripsts-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="dataMod.js"></script>
     <script src="dataGraph.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="app.js"></script>
 
-    
-
-
-    
+     
 
 </body>
 </html>
