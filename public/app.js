@@ -2,6 +2,9 @@
 const socket = io();
 let state=0;
 
+let charts=[]
+
+//button comprobation
 const button = document.getElementById('startButton');
 button.addEventListener('click',()=>{
     if(button.innerText==="Iniciar conexion"){
@@ -17,20 +20,18 @@ button.addEventListener('click',()=>{
     }
 })
 
-
-const sensores = ["temperature","bmp","oxigenSaturation","gsrResistance","grsVoltage","airflux"]
-
+const sensores = ["temperature","bpm","oxigenSaturation","gsrResistance","grsVoltage","airflux"]
+renderGui(sensores)
 //when the rasberry send the data 
 socket.on('rasberry:data', (dataSerial) => {
     
-    // sessionStorage.setItem('data',chart1.data.data)
-    dataRun(Chart1,dataSerial.sample,dataSerial.temperature)
-    dataRun(Chart2,dataSerial.sample,dataSerial.bpm)
-    dataRun(Chart3,dataSerial.sample,dataSerial.oxigenSaturation)
-    
+    for(let i = 0; i<sensores.length;i++){
+        dataRun(charts[i],dataSerial.sample,dataSerial[sensores[i]])
+    }
+
 
 })
 
-const Chart1 = dataGraph("myChartTemp");
-const Chart2= dataGraph("myChartBMP");
-const Chart3 = dataGraph("myChartox");
+for(let i = 0 ;i < sensores.length;i++){
+    charts[i]=dataGraph(sensores[i])
+}

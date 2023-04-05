@@ -29,27 +29,20 @@ Server.listen(app.get('port'),()=>{
 
 //event in io server 
 io.on('connection',(socket)=>{
-    console.log('\nNueva coneccion del socket: ', socket.handshake.address);
-
-  
-        
+    console.log('\nNueva coneccion del socket: ', socket.handshake.address); 
     var comprobante=0;
 
     //socket recieber for the rasberry data send 
     socket.on('rasberry:data', (data) => {
     // buffer liberator  
         const bufferProbe = new Promise((resolve,reject)=>{
-                if(comprobante!=1){
-                    if(data.sample!=1){
-                        reject("esperando buffer")
-                    }else{
-                        resolve()
-                    }
-                }else{
-                    resolve()
-                }
+            if(comprobante!=1&&data.sample!=1){
+                reject('esperando buffer')
+            }else{
+                resolve()
+            }
         })
-    bufferProbe
+        bufferProbe
             .then(()=>{
                 comprobante=1
                 data.temperature=(comp(data.temperature,37,35,33));
@@ -63,21 +56,18 @@ io.on('connection',(socket)=>{
 
     });
 
+
     socket.on('error', (err) => {
         console.log(err.message)
         })
-
     socket.on('disconnect',()=>{
         console.log("\nComunicacion finalizada en: ", socket.handshake.address)
     })
-
     socket.on('btninit',(state)=>{
         const message = (state == 1) ? 'Transmisión iniciada' : 'Transmisión detenida';
         console.log(message);
         io.emit('btninit',state)
     })
-
-
 });
 
 
