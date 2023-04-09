@@ -18,7 +18,9 @@ const  io = WebSocketServer(Server);
 //static files indication with dir path, and frontend directory 
 app.use(express.static(__dirname + '/public'));
 
-
+app.get('/pruebas',(req,res)=>{
+    res.sendFile((__dirname+'/public/pruebas/pruebas.html'))
+})
 
 //start  httpsever and listen in the port
 app.set('port', process.env.PORT || 3000);// PORT Asignment

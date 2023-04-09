@@ -20,7 +20,7 @@ button.addEventListener('click',()=>{
     }
 })
 
-const sensores = ["temperature","bpm","oxigenSaturation","gsrResistance","grsVoltage","airflux"]
+const sensores = ["temperature","bpm","oxigenSaturation","gsrResistance","grsVoltage","airflux","ECG"]
 renderGui(sensores)
 //when the rasberry send the data 
 socket.on('rasberry:data', (dataSerial) => {
@@ -28,7 +28,6 @@ socket.on('rasberry:data', (dataSerial) => {
     for(let i = 0; i<sensores.length;i++){
         dataRun(charts[i],dataSerial.sample,dataSerial[sensores[i]])
     }
-
 
 })
 
