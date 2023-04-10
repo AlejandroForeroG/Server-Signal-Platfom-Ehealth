@@ -1,0 +1,50 @@
+{
+    "temperature":{
+        "amarilla":{
+            "limite_inferior": 36.5,
+            "limite_superior": 37.5
+        },
+        "naranja": {
+            "limite_inferior": 37.6,
+            "limite_superior": 38.0
+        },
+        "roja": {
+            "limite_inferior": 38.1
+        }
+    },
+    "bpm":{
+       "amarilla": {
+            "limite_inferior": 60,
+            "limite_superior": 100
+        },
+        "naranja": {
+            "limite_inferior": 101,
+            "limite_superior": 150
+        },
+        "roja": {
+            "limite_inferior": 151
+            
+        }
+    },
+    "oxigenSaturation":{
+        "amarilla":{
+            "limite_inferior":95,
+            "limite_superior":100
+        }
+    },
+    "ECG": {
+
+       "amarilla": {
+            "limite_inferior": 60,
+            "limite_superior": 100
+        },
+        "naranja": {
+            "limite_inferior": 101,
+            "limite_superior": 150
+        },
+        "roja": {
+            "limite_inferior": 151
+            
+        }
+    }
+}
