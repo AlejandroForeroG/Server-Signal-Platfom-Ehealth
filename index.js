@@ -7,17 +7,27 @@ Made by: Juan Alejandro Forero Gomez*/
 const express = require('express'); 
 const http = require('http');
 const WebSocketServer =  require("socket.io")
-const adminSignal = require('./adminSignal');
-const SignalsApi = require('./adminSignal');
+
 
 const app = express();
+
+
 const Server =  http.createServer(app);    
-const  io = WebSocketServer(Server);
+const  io = WebSocketServer(Server,{
+    cors: {
+    origin: '*', // Permite un origen específico
+    methods: ['GET', 'POST'], // Permite solo los métodos GET y POST
+    allowedHeaders: ['Content-Type', 'Authorization'], // Permite solo ciertos encabezados
+    credentials: true, // Habilita el uso de cookies o credenciales
+  }
+});
 
 
 //static files indication with dir path, and frontend directory 
-const aplicativo = new SignalsApi();
-aplicativo.iniciarServidor();
+app.use(express.static(__dirname + '/public'));
+
+
+
 
 
 
@@ -53,9 +63,8 @@ io.on('connection',(socket)=>{
         bufferProbe
             .then(()=>{
                 comprobante=1
-                data.temperature=(comp(data.temperature,37,35,33));
                 io.emit('rasberry:data', data);
-                aplicatiov.setSignalData(data);
+                aplicativo.setSignalData(data);
                 console.log(data.sample)
             })
             .catch((rechazo)=>{
@@ -81,13 +90,5 @@ io.on('connection',(socket)=>{
 
 
 
-//comparator 
-function comp(comp,max,min,prom){
-    comp=comp;
-    if(comp>=max ||comp<=min ){
-        return comp
-    }else
-        return prom;
-}
 
 
