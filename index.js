@@ -7,25 +7,31 @@ Made by: Juan Alejandro Forero Gomez*/
 const express = require('express'); 
 const http = require('http');
 const WebSocketServer =  require("socket.io")
-
-
-
+const adminSignal = require('./adminSignal');
+const SignalsApi = require('./adminSignal');
 
 const app = express();
 const Server =  http.createServer(app);    
 const  io = WebSocketServer(Server);
 
+
 //static files indication with dir path, and frontend directory 
-app.use(express.static(__dirname + '/public'));
+const aplicativo = new SignalsApi();
+aplicativo.iniciarServidor();
+
+
+
+
+
+//start  httpsever and listen in the port
+app.set('port', process.env.PORT || 3100);// PORT Asignment
+Server.listen(app.get('port'),()=>{
+    console.log(`El servidor esta escuchando en el puerto ${app.get('port')}...` )
+})
+
 
 app.get('/pruebas',(req,res)=>{
     res.sendFile((__dirname+'/public/pruebas/pruebas.html'))
-})
-
-//start  httpsever and listen in the port
-app.set('port', process.env.PORT || 3000);// PORT Asignment
-Server.listen(app.get('port'),()=>{
-    console.log(`El servidor esta escuchando en el puerto ${app.get('port')}...` )
 })
  
 
@@ -49,6 +55,7 @@ io.on('connection',(socket)=>{
                 comprobante=1
                 data.temperature=(comp(data.temperature,37,35,33));
                 io.emit('rasberry:data', data);
+                aplicatiov.setSignalData(data);
                 console.log(data.sample)
             })
             .catch((rechazo)=>{
