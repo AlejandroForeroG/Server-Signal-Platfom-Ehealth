@@ -13,11 +13,11 @@ class SocketServer{
      handleConnection(socket){
         console.log('\nNueva coneccion del socket: ', socket.handshake.address); 
         
-        //socket recieber for the rasberry data send 
-        socket.on('rasberry:data', (data) => { 
+        //socket events
+        socket.on('rasberry:data', (data) => {
+    
             this.bufferProbe(data);
         });
-
         socket.on('error', (err) => {
             console.log(err.message);
         });
@@ -44,7 +44,7 @@ class SocketServer{
             .then(()=>{
                 this.comprobante=1
                 this.io.emit('rasberry:data', data);
-                console.log(data.sample)
+                
             })
             .catch((rechazo)=>{
                 console.log(data.sample)

@@ -4,7 +4,8 @@
   "description": "Server side platform for e-health biosignals data managment",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "npm src/SocketServer.js",
+    "dev": "nodemon src/SocketServer.js"
   },
   "repository": {
     "type": "git",
