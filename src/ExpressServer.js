@@ -5,19 +5,23 @@ class ExpressServer{
     constructor(){
         this.app = express();
         this.Server =  http.createServer(this.app);   
+        this.app.use(require('cors')(this.CORS()));
+        //middlewares
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({extended:false}));
 
-        this.app.use(express.static(__dirname + '/public'));
-        this.app.get('/pruebas',(req,res)=>{
-            res.sendFile((__dirname+'/public/pruebas/pruebas.html'));
-        }); 
+        //rutas 
+        this.app.use(require('../routes/route'));
+        
+    
     }
 
     CORS(){
         return{
           cors: {
             origin: '*', // Permite un origen específico
-            methods: ['GET', 'POST'], // Permite solo los métodos GET y POST
-            allowedHeaders: ['Content-Type', 'Authorization'], // Permite solo ciertos encabezados
+            methods: ['GET', 'POST','PUT','PATCH','DELETE'], // Permite solo los métodos
+            allowedHeaders: ['*'], // Permite solo ciertos encabezados
             credentials: true, // Habilita el uso de cookies o credenciales
             }    
         }
