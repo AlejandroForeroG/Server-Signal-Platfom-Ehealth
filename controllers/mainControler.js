@@ -7,10 +7,7 @@ const pool = new Pool({
   database: "myDB",
 });
 
-const getUsers = async (req, res) => {
-  const response = await pool.query("SELECT * FROM usuarios");
-  res.status(200).json(response.rows);
-};
+
 
 const editUser = async (req, res) => {
   try {
@@ -49,6 +46,5 @@ const editUser = async (req, res) => {
 };
 
 module.exports = {
-  getUsers,
   editUser,
 };
