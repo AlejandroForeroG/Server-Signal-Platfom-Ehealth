@@ -1,7 +1,7 @@
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  host: "192.168.10.12",
+  host: "192.168.10.20",
   user: "myUser",
   password: "myPassword",
   database: "myDB",
@@ -12,7 +12,7 @@ const pool = new Pool({
 const editUser = async (req, res) => {
   try {
     const id = req.params.id;
-    const { name, age, weight, height, isActive } = req.body;
+    const { name, age, weight, height, isactive } = req.body;
 
     //lo que va a conteneer el query dependiendo lo que se quiera modificar
     let query = "";
@@ -28,16 +28,14 @@ const editUser = async (req, res) => {
     if (age) {
       query += `age = '${age}', `;
     }
-    if (isActive !=null) {
-      query += `isActive = '${isActive}', `;
+    if (isactive !=null) {
+      query += `isactive = '${isactive}', `;
     }
     query = query.slice(0, -2);
-    console.log(isActive);
-    console.log(query);
 
+    console.log(query);
     const sql = `UPDATE usuarios SET ${query} WHERE id = '${id}'`;
     const usuario = await pool.query(sql);
-
     return res.status(200).json({ mensaje: "Usuario actualizado" });
    
   } catch (err) {
@@ -45,6 +43,11 @@ const editUser = async (req, res) => {
   }
 };
 
+
+
+
 module.exports = {
   editUser,
 };
+
+
