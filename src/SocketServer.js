@@ -1,7 +1,7 @@
 const WebSocketServer = require("socket.io");
 const ExpressServer = require("./ExpressServer");
-const { newMuestra,insertSample } = require("../controllers/signalsController");
-
+const { newMuestra } = require("../controllers/signalsController");
+const SignalManager = require("./SignalManager");
 /** creacion de la clase socket server la cual se
  * encarga de gestionar los eventos de la aplicacion
  */
@@ -13,13 +13,10 @@ class SocketServer {
       this.expressServer.CORS()
     );
     this.io.on("connection", this.handleConnection.bind(this));
-    this.comprobante = 0;
-    this.intervals = [];
+    
     this.data;
-    this.isEventActive = false;
     this.actualUser = null;
-    this.signals = null;
-    this.dataTemperature = [];
+    this.sigs = [];
   }
 
   handleConnection(socket) {
@@ -44,22 +41,22 @@ class SocketServer {
      */
     socket.on("btninit", async (state) => {
       let message = "";
-
       if (state == 1) {
+        this.io.emit("btninit", state);
         message = "Transmision iniciada";
-        if (this.signals) {
+        if (this.sigs) {
           await newMuestra(this.actualUser);
-          this.signals.forEach((signal) => {
-            this.initInterval(signal);
+          this.sigs.forEach((signal) => {
+            signal.start(this.data);
           });
         }
-        this.io.emit("btninit", state);
       } else {
         this.io.emit("btninit", state);
         message = "Transmision detenida";
-        await this.stopIntervals();
+        this.sigs.forEach(async (signal) => {
+          await signal.stop();
+        });
       }
-
       console.log(message);
     });
 
@@ -68,34 +65,14 @@ class SocketServer {
      * utilizarlas luego
      */
     socket.on("info", (data) => {
-      this.signals = data.signals;
       this.actualUser = data.actualUser;
+      data.signals.forEach((signal) => {
+        this.sigs.push(new SignalManager(signal));
+      });
+      this.sigs.forEach((signal) => {
+        signal.mostrar();
+      });
     });
-  }
-
-  /**
-   * aqui se trabaja con los intervalos asignados anteriormente y
-   * se realizan las tareas correspondientes, de la base de datos
-   */
-  initInterval(signal) {
-    const intervalId = setInterval(() => {
-      // console.log(this.data[signal.dataName]);
-      if ((signal.dataName == "temperature")) {
-        console.log(this.data[signal.dataName])
-        this.dataTemperature.push(this.data[signal.dataName]);
-      } else {
-      }
-    }, signal.samplingTime * 1000);
-    this.intervals.push(intervalId);
-  }
-
-  async stopIntervals() {
-    this.intervals.forEach((intervalId) => {
-      clearInterval(intervalId);
-    });
-    console.log(this.dataTemperature)
-    await insertSample(this.dataTemperature);
-    this.dataTemperature = [];
   }
 }
 

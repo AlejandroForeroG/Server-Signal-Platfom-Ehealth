@@ -17,20 +17,19 @@ async function newMuestra(user) {
   }
 }
 
-async function insertSample(valor) {
+async function insertSample(valor,id) {
   try {
     let sql = `INSERT INTO signals(MuestraID, Tipo, Valor) VALUES `
 
     valor.forEach((element,index) => {
-      sql +=`((SELECT MAX(MuestraID) FROM Muestras),${1}, ${element})`;
+      sql +=`((SELECT MAX(MuestraID) FROM Muestras),${id}, ${element})`;
       if (index !== valor.length - 1) {
         sql += ", ";
       }else{
         sql+=";"
       }
     });
-    const usuario = await pool.query(sql);
-    console.log(sql);
+    await pool.query(sql);
   } catch (e) {
     console.log(e);
   }
