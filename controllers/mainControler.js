@@ -1,7 +1,7 @@
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  host: "192.168.10.20",
+  host: "192.168.10.22",
   user: "myUser",
   password: "myPassword",
   database: "myDB",
@@ -42,12 +42,22 @@ const editUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
+const deleteUser = async(req,res)=>{
+  try {
+    const id = req.params.id;
+    const sql = `DELETE FROM usuarios WHERE id = '${id}'`;
+    const usuario = await pool.query(sql);
+    return res.status(200).json({ mensaje: "Usuario eliminado" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
 
 
 
 module.exports = {
   editUser,
+  deleteUser
 };
 
 
