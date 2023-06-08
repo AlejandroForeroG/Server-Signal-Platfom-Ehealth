@@ -1,7 +1,7 @@
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  host: "192.168.10.22",
+  host: "192.168.10.19",
   user: "myUser",
   password: "myPassword",
   database: "myDB",
@@ -17,16 +17,16 @@ async function newMuestra(user) {
   }
 }
 
-async function insertSample(valor,id) {
+async function insertSample(valor, id) {
   try {
-    let sql = `INSERT INTO signals(MuestraID, Tipo, Valor) VALUES `
+    let sql = `INSERT INTO signals(MuestraID, Tipo, Valor) VALUES `;
 
-    valor.forEach((element,index) => {
-      sql +=`((SELECT MAX(MuestraID) FROM Muestras),${id}, ${element})`;
+    valor.forEach((element, index) => {
+      sql += `((SELECT MAX(MuestraID) FROM Muestras),${id}, ${element})`;
       if (index !== valor.length - 1) {
         sql += ", ";
-      }else{
-        sql+=";"
+      } else {
+        sql += ";";
       }
     });
     await pool.query(sql);
@@ -34,4 +34,16 @@ async function insertSample(valor,id) {
     console.log(e);
   }
 }
-module.exports = { newMuestra,insertSample };
+
+const getSample = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const sql = `SELECT * FROM muestras WHERE userId = ${id}`;
+    const response = await pool.query(sql);
+    res.status(200).json(response.rows);
+  } catch (e) {
+    res.status(600).json({ isactive: false });
+  }
+};
+module.exports = { newMuestra, insertSample, getSample };
+//
