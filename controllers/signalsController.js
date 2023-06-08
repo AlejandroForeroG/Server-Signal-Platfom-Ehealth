@@ -45,5 +45,22 @@ const getSample = async (req, res) => {
     res.status(600).json({ isactive: false });
   }
 };
-module.exports = { newMuestra, insertSample, getSample };
+
+const getDataSignals = async (req, res) => {
+  try {
+    const userid = req.params.id;
+    const tipo = req.params.tipo;
+    const muestraid= req.params.muestraid;
+    const sql = `SELECT signals.*
+      FROM signals
+      JOIN muestras ON signals.muestraid = muestras.muestraid
+      JOIN usuarios ON muestras.userid = usuarios.id
+      WHERE signals.tipo = ${tipo} AND muestras.muestraid = ${muestraid} AND usuarios.id = ${userid};`;
+    const response = await pool.query(sql);
+    res.status(200).json(response.rows);
+  } catch (e) {
+    res.status(600).json({ isactive: false });
+  }
+};
+module.exports = { newMuestra, insertSample, getSample, getDataSignals };
 //
